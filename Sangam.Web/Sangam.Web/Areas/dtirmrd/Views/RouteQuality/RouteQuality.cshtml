@@ -1,0 +1,160 @@
+﻿@model Sangam.Core.Model.RouteQuality
+@{
+    ViewBag.Title = "RouteQuality";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listItems = new List<SelectListItem> { new SelectListItem { Text = "AM", Value = "AM" }, new SelectListItem { Text = "MN", Value = "MN" }, new SelectListItem { Text = "PM", Value = "PM" } };
+    var listItems1 = new List<SelectListItem> { new SelectListItem { Text = "MID#10", Value = "MID#10" }, new SelectListItem { Text = "MID#11", Value = "MID#12" }, new SelectListItem { Text = "MID#12", Value = "MID#12" } };
+}
+
+@using (Html.BeginForm("InsertRouteQuality", "RouteQuality", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel panel">
+        <div class="panel-heading">
+            QUALITY CONTROL ON DIRECT ROUTE MILK
+        </div>
+        <hr />
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                Date & Time:
+                            </div>
+                            @Html.TextBoxFor(model => model.DateTime, new { @class = "form-control", @Value = @DateTime.Now, required = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Shift:
+                        </div>
+                        @Html.DropDownListFor(model => model.Shift, listItems, new { @class = "form-control", required = "required" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Checked by:
+                        </div>
+                        @Html.TextBoxFor(model => model.CheckedBy, new { @class = "form-control", required = "required", @Value = "Mahendra", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    Sample Number:
+                    @Html.TextBoxFor(model => model.SampleNo, new { @class = "form-control", required = "required" })
+                </div>
+                <div class="col-xs-4">
+                    Machine ID#:
+                    @Html.DropDownListFor(model => model.MachineId, listItems1, new { @class = "form-control", required = "required" });
+                </div>
+            </div>
+
+
+
+            &nbsp;
+            <div>
+                <table class="table table-bordered">
+                    <thead style="background-color: aquamarine;">
+                    <th>
+                        FAT%
+                    </th>
+                    <th>
+                        CLR
+                    </th>
+
+                    <th>
+                        SNF
+                    </th>
+                    <th>
+                        REMARK
+                    </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.TextBoxFor(model => model.FAT, new { @class = "form-control", required = "required" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.CLR, new { @class = "form-control", required = "required" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.SNF, new { @class = "form-control", required = "required" })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group" style="text-align: right;">
+                    <a href="/Sangam/Index" class="btn btn-default width23">Cancel</a>
+                    <input type="submit" class="btn btn-default width23" value="Submit" />
+                </div>
+                <hr />
+                <table class="table table-bordered">
+                    <thead style="background-color: whitesmoke;">
+                    <th>
+                        Sample #
+                    </th>
+                    <th>
+                        FAT%
+                    </th>
+                    <th>
+                        CLR
+                    </th>
+
+                    <th>
+                        SNF
+                    </th>
+                    <th>
+                        REMARK
+                    </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                <asp:Label ID="TextBox10" Width="90px" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="TextBox15" Width="90px" runat="server"></asp:Label>
+                            </td>
+
+                            <td>
+                                <asp:Label ID="TextBox16" Width="90px" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="TextBox7" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                <asp:Label ID="TextBox17" Width="90px" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="TextBox18" Width="90px" runat="server"></asp:Label>
+                            </td>
+
+                            <td>
+                                <asp:Label ID="TextBox19" Width="90px" runat="server"></asp:Label>
+                            </td>
+                            <td>
+                                <asp:Label ID="TextBox8" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

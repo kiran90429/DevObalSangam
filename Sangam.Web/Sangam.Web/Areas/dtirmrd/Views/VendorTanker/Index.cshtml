@@ -1,0 +1,223 @@
+﻿@model Sangam.Core.Model.VendorTankerModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var NoofCellsList = new List<SelectListItem> { new SelectListItem { Text = "1", Value = "1" }, new SelectListItem { Text = "2", Value = "2" }, new SelectListItem { Text = "3", Value = "3" }, new SelectListItem { Text = "4", Value = "4" } };
+    var MaterialType = new List<SelectListItem> { new SelectListItem { Text = "Milk", Value = "1" } };
+
+
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#VehicleNo").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/dtirmrd/VendorTanker/GetAllVendorDetails",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.VendorName, value: item.VendorId };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+@using (Html.BeginForm("InsertVendorTanker", "VendorTanker", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            OTHER TANKERS
+        </div>
+        <hr />
+        <div class="panel-body">
+
+            <div class="col-sm-12">
+                Vender Name/Party Name
+                @Html.TextBoxFor(model => model.VendorId, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col-sm-4">
+                Vehical Number
+                @Html.TextBoxFor(model => model.VehicleNo, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                No of Cell's:
+                @Html.DropDownListFor(model => model.NoOfCells, NoofCellsList, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                Material:
+                @Html.DropDownListFor(model => model.Material, MaterialType, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col-sm-4">
+
+            </div>
+            <div class="col-sm-8">
+                &nbsp;
+            </div>
+
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        FC:
+                    </div>
+                    @Html.TextBoxFor(model => model.Cell1Qty, new { @class = "form-control", required = "required" })
+                    <div class="col-sm-5">
+                        Partial
+                        @Html.CheckBoxFor(model => model.Cell1Partial, new { required = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        MC
+                    </div>
+                    @Html.TextBoxFor(model => model.Cell2Qty, new { @class = "form-control", required = "required" })
+                    <div class="col-sm-5">
+                        Partial
+                        @Html.CheckBoxFor(model => model.Cell2Partial, new { required = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        BC
+                    </div>
+                    @Html.TextBoxFor(model => model.Cell3Qty, new { @class = "form-control", required = "required" })
+                    <div class="col-sm-5">
+                        Partial
+                        @Html.CheckBoxFor(model => model.Cell3Partial, new { required = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        SBC
+                    </div>
+                    @Html.TextBoxFor(model => model.Cell4Qty, new { @class = "form-control", required = "required" })
+                    <div class="col-sm-5">
+                        Partial
+                        @Html.CheckBoxFor(model => model.Cell4Partial, new { required = "required" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                Total Quantity
+                @Html.TextBoxFor(model => model.TotalQty, new { @class = "form-control", required = "required", @readonly = "readonly" })
+            </div>
+            <div class="col-sm-6">
+                &nbsp;
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    Remarks
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group" style="text-align: right;">
+                    <a href="/Quality/QualityDashBoard/Index" class="btn btn-default">Cancel</a>
+                    <input type="submit" class="btn btn-default" value="Submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script type="text/javascript">
+    $(document).on('change', '#NoOfCells', function () {
+        if ($("#NoOfCells").val() == 2) {
+            $("#Cell3Qty").prop('disabled', true);
+            $("#Cell3Partial").prop('disabled', true);
+            $("#Tota3Qty").val(0);
+            $("#Tota4Qty").val(0);
+
+            $("#Cell4Qty").prop('disabled', true);
+            $("#Cell4Partial").prop('disabled', true);
+        }
+        if ($("#NoOfCells").val() == 3) {
+            $("#Cell3Qty").prop('disabled', false);
+            $("#Cell3Partial").prop('disabled', false);
+            $("#Tota4Qty").val(0);
+        }
+
+        if ($("#NoOfCells").val() == 3) {
+            $("#Cell4Qty").prop('disabled', true);
+            $("#Cell4Partial").prop('disabled', true);
+            $("#Tota4Qty").val(0);
+        }
+        if ($("#NoOfCells").val() == 4) {
+            $("#Cell3Qty").prop('disabled', false);
+            $("#Cell3Partial").prop('disabled', false);
+
+            $("#Cell4Qty").prop('disabled', false);
+            $("#Cell4Partial").prop('disabled', false);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).on('change', '#Cell1Qty', function () {
+        AddAll();
+    });
+    $(document).on('change', '#Cell2Qty', function () {
+        AddAll();
+    });
+    $(document).on('change', '#Cell3Qty', function () {
+        AddAll();
+    });
+    $(document).on('change', '#Cell4Qty', function () {
+        AddAll();
+    });
+
+    function AddAll() {
+        var val4;
+        var val3;
+        var val2;
+        var val1;
+        if (parseInt($("#Cell1Qty").val(), 10) > 0) {
+            val1 = parseInt($("#Cell1Qty").val(), 10);
+        } else {
+            val1 = 0;
+        }
+
+        if (parseInt($("#Cell2Qty").val(), 10) > 0) {
+            val2 = parseInt($("#Cell2Qty").val(), 10);
+        } else {
+            val2 = 0;
+        }
+
+        if (parseInt($("#Cell3Qty").val(), 10) > 0) {
+            val3 = parseInt($("#Cell3Qty").val(), 10);
+        } else {
+            val3 = 0;
+        }
+        if (parseInt($("#Cell4Qty").val(), 10) > 0) {
+            val4 = parseInt($("#Cell4Qty").val(), 10);
+        } else {
+            val4 = 0;
+        }
+
+        $("#TotalQty").val(val1 + val2 + val3 + val4);
+    }
+</script>

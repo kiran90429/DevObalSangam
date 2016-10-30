@@ -1,0 +1,110 @@
+﻿@model Sangam.Core.Model.WeighmentModel
+
+@{
+    ViewBag.Title = "WeighmentInAddNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listItems = new List<SelectListItem> { new SelectListItem { Text = "AM", Value = "AM" }, new SelectListItem { Text = "MN", Value = "MN" }, new SelectListItem { Text = "PM", Value = "PM" } };
+    var produTypeDD = new List<SelectListItem> { new SelectListItem { Text = "Milk", Value = "Milk" } };
+    var supplyFromDD = new List<SelectListItem> { new SelectListItem { Text = "Name Of Milk Suppliers", Value = "Name Of Milk Suppliers" } };
+    var weighingByDD = new List<SelectListItem> { new SelectListItem { Text = "Mahendra", Value = "Mahendra" } };
+    var nextId = "RST-" + Session["NextId"].ToString();
+
+    <style type="text/css">
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+            background-color: #000;
+        }
+    </style>
+
+}
+
+@using (Html.BeginForm("InsertWeighmentIn", "WeighmentIn", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel panel">
+        <div class="panel-heading">
+            ADD WEIGHMENT DETAILS
+        </div>
+        &nbsp;
+        <div class="panel-body">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">Date & Time</span>
+                    @Html.TextBoxFor(model => model.DateTime, new { @class = "form-control", @Value = @DateTime.Now, required = "required" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">RST No</span>
+                    @Html.TextBoxFor(model => model.RefNo, new { @class = "form-control", required = "required", @readonly = "readonly", @Value = @nextId })
+                    @Html.HiddenFor(model => model.WeighmentId)
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2">Shift</span>
+                    @Html.DropDownListFor(model => model.Shift, listItems, new { @class = "form-control", required = "required" })
+                    @Html.HiddenFor(model => model.WeighmentId)
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="SLNo" class="col-sm-3 control-label">SL No</label>
+                @Html.TextBoxFor(model => model.Slno, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.Slno)
+            </div>
+
+            <div class="col-sm-6">
+                &nbsp;
+                <label for="Product" class="col-sm-3 control-label">Product Type</label>
+                @Html.DropDownListFor(model => model.ProductType, produTypeDD, new { @class = "form-control", required = "required" })
+                <div style="height: 10px;">
+                    <p class="help-block"> @Html.ValidationMessageFor(model => model.ProductType)</p>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                &nbsp;
+                <label for="Vehical" class="col-sm-3 control-label">Vehical No</label>
+                @Html.TextBoxFor(model => model.VehicleNo, new { @class = "form-control VehicleNo_class " })
+                @Html.ValidationMessageFor(model => model.VehicleNo)
+
+            </div>
+
+            <div class="col-sm-6">
+                &nbsp;
+                <label for="Supply" class="col-sm-3 control-label">Supply From</label>
+                @Html.DropDownListFor(model => model.VendorName, supplyFromDD, new { @class = "form-control", required = "required" })
+                <div style="height: 10px;">
+                    <p class="help-block"> @Html.ValidationMessageFor(model => model.VendorName)</p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                &nbsp;
+                <label for="Weight" class="col-sm-3 control-label">Gross Weight</label>
+                @Html.TextBoxFor(model => model.GrossWeight, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.GrossWeight);
+            </div>
+            <div class="col-sm-6">
+                &nbsp;
+                <label for="Weighing" class="col-sm-3 control-label">Weighing By</label>
+                @*@Html.DropDownListFor(model => model.WeighingBy, weighingByDD, new { @class = "form-control", required = "required" })*@
+                @Html.TextBoxFor(model => model.WeighingBy, new { @class = "form-control", required = "required", @Value = "Mahendra" })
+                <div style="height: 10px;">
+                    <p class="help-block"> @Html.ValidationMessageFor(model => model.WeighingBy)</p>
+                </div>
+            </div>
+            <div class="row" style="height:25px;">
+                &nbsp;
+            </div>
+            <div class="col-sm-12">
+                <a href="/dtirmrd/WeighmentIn/WeighmentIn" class="btn btn-success">Cancel</a>
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

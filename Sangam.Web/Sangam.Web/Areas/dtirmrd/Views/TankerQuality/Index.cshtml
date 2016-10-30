@@ -1,0 +1,232 @@
+﻿@model Sangam.Core.Model.TankerQualityModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listItems = new List<SelectListItem> { new SelectListItem { Text = "AM", Value = "AM" }, new SelectListItem { Text = "MN", Value = "MN" }, new SelectListItem { Text = "PM", Value = "PM" } };
+    var celltypes = new List<SelectListItem> { new SelectListItem { Text = "FC", Value = "1" }, new SelectListItem { Text = "MC", Value = "2" }, new SelectListItem { Text = "BC", Value = "3" } };
+    var milktypes = new List<SelectListItem> { new SelectListItem { Text = "TM", Value = "1" }, new SelectListItem { Text = "DTM", Value = "2" }, new SelectListItem { Text = "FCM", Value = "3" } };
+    var QualityStatusList = new List<SelectListItem> { new SelectListItem { Text = "Approved", Value = "1" }, new SelectListItem { Text = "Reject", Value = "2" }, new SelectListItem { Text = "Other", Value = "3" } };
+    var Id = "";
+    if (Session["Id"] != null)
+    {
+        if (Session["Id"].ToString() != "")
+        {
+            Id = Session["Id"].ToString();
+        }
+        else
+        {
+            Id = "";
+        }
+    }
+    else
+    {
+        Id = "";
+    }
+}
+
+@using (Html.BeginForm("TankerQualitySaveUpdate", "TankerQuality", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            QUALITY CHECK ON TANKERS
+        </div>
+        &nbsp;
+        <div class="panel-body" style="padding-left: 5px; padding-right: 5px;">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Date & Time:
+                        </div>
+                        @Html.TextBoxFor(model => model.DateTime, new { @class = "form-control", @Value = @DateTime.Now, required = "required" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Shift:
+                        </div>
+                        @Html.DropDownListFor(model => model.Shift, listItems, new { @class = "form-control", required = "required" })
+                        @Html.HiddenFor(model => model.tQualityId)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            RST No:
+                        </div>
+                        @Html.TextBoxFor(model => model.tRefNo, new { @class = "form-control", required = "required", @Value = @Id })
+                        @Html.HiddenFor(model => model.tQualityId)
+                    </div>
+                </div>
+                &nbsp;
+                <div class="col-md-4">
+                    Vehicle Number:
+                    @Html.TextBoxFor(model => model.VehicleNo, new { @class = "form-control", required = "required", @readonly = "readonly" })
+                </div>
+                &nbsp;
+                <div class="col-md-6">
+                    From:
+                    @Html.TextBoxFor(model => model.VendorName, new { @class = "form-control", required = "required", @readonly = "readonly" })
+                </div>
+                &nbsp;
+                <div class=" col-md-12">
+                    Cell Type
+                    @Html.DropDownListFor(model => model.CellType, celltypes, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Milk Type
+                    @Html.DropDownListFor(model => model.MilkType, milktypes, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Quantity
+                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    OT
+                    @Html.TextBoxFor(model => model.OT, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Temparature
+                    @Html.TextBoxFor(model => model.temp, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Acidity %
+                    @Html.TextBoxFor(model => model.Acidity, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    FAT %
+                    @Html.TextBoxFor(model => model.Fat, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    CLR
+                    @Html.TextBoxFor(model => model.Clr, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    SNF %
+                    @Html.TextBoxFor(model => model.Snf, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    COB
+                    @Html.TextBoxFor(model => model.Cob, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    PS
+                    @Html.TextBoxFor(model => model.Ps, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Alcohol %
+                    @Html.TextBoxFor(model => model.Alcohol, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    MBRT
+                    @Html.TextBoxFor(model => model.mbrt, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Adultrants
+                    @Html.TextBoxFor(model => model.Adultrants, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Neutralizers
+                    @Html.TextBoxFor(model => model.Neutralizers, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Seal Number
+                    @Html.TextBoxFor(model => model.SealNo, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-3">
+                    Quality Status
+                    @Html.DropDownListFor(model => model.QualityStatus, QualityStatusList, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-12">
+                    Quality Tested by:
+                    @Html.TextBoxFor(model => model.QualityTestby, new { @class = "form-control", required = "required" })
+                </div>
+                <div class=" col-md-12">
+                    Remarks:
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control", required = "required" })
+                </div>
+                <br />
+                <div class="row">
+                    &nbsp;
+                </div>
+                <div class=" col-md-12" style="padding:15px;">
+                    <div class="form-group" style="text-align: right;">
+                        <a href="/Quality/QualityDashBoard/Index" class="btn btn-default">Cancel</a>
+                        <input type="submit" class="btn btn-default" value="Submit" />
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(function () { getvalues() });
+
+    $(document).on('change', '#tRefNo', function () {
+        $.post('/dtirmrd/TankerQuality/GetTankerDetails', { rSTNo: $(this).val() }).success(function (data) {
+            debugger;
+            $('#VehicleNo').val(data.VehicleNo);
+            $('#VendorName').val(data.VendorName);
+        });
+    });
+
+
+    $(document).on('change', '#tRefNo', function () {
+        clearvalues();
+        getvalues();
+    });
+
+    $(function () {
+        $("#CellType").change(function () {
+            clearvalues();
+            getvalues();
+        });
+    });
+    function getvalues() {
+        $.post('/dtirmrd/TankerQuality/GetTankerQualityDetails', { rSTNo: $("#tRefNo").val(), rCellType: $("#CellType").val() }).success(function (data) {
+            debugger;
+
+            $('#tQualityId').val(data.tQualityId);
+            $('#Quantity').val(data.Quantity);
+            $('#OT').val(data.OT);
+            $('#temp').val(data.temp);
+            $('#Acidity').val(data.Acidity);
+            $('#Fat').val(data.Fat);
+            $('#Clr').val(data.Clr);
+            $('#Snf').val(data.Snf);
+            $('#Cob').val(data.Cob);
+            $('#Ps').val(data.Ps);
+            $('#Alcohol').val(data.Alcohol);
+            $('#mbrt').val(data.mbrt);
+            $('#Adultrants').val(data.Adultrants);
+            $('#Neutralizers').val(data.Neutralizers);
+            $('#SealNo').val(data.SealNo);
+            $('#QualityTestby').val(data.QualityTestby);
+            $('#Remark').val(data.Remark);
+        });
+    }
+    function clearvalues() {
+        $('#OT').val(null);
+        $('#temp').val(null);
+        $('#Acidity').val(null);
+        $('#Fat').val(null);
+        $('#Clr').val(null);
+        $('#Snf').val(null);
+        $('#Cob').val(null);
+        $('#Ps').val(null);
+        $('#Alcohol').val(null);
+        $('#mbrt').val(null);
+        $('#Adultrants').val(null);
+        $('#Neutralizers').val(null);
+        $('#SealNo').val(null);
+        $('#QualityTestby').val(null);
+        $('#Remark').val(null);           
+    }
+</script>

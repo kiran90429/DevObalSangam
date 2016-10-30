@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Sangam.Core.Model.QualityDashBoardCommonDisplay>
+
+@using GridMvc.Html
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("QualityInChargeStatusUpdate", "QualityDashBoard", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel panel">
+        <div class="panel-heading">
+            QUALITY CONTROL - InCharge DASH BOARD
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="panel panel">
+                <div class="panel-heading">
+                    PENDING QUALITY TESTS
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+
+                        @Html.Grid(Model).Columns(columns =>
+               {
+                   columns.Add()
+                      .Titled("Reference No")
+                      .SetWidth(5)
+                      .Filterable(true)
+                      .Sanitized(false)
+                      .Encoded(false)
+                      .RenderValueAs(c => Html.ActionLink(c.RefNo, "GetWeighmentInDetails", "../dtirmrd/TankerQuality/", new { id = c.RefNo }, null));
+
+                   columns.Add(c => c.Section).Titled("Request From").Filterable(false);
+                   columns.Add(c => c.Requestby).Titled("Request by").Filterable(false);
+                   columns.Add(c => c.Status).Titled("Status").Filterable(false);
+
+                   columns.Add()
+                      .Titled("Complete")
+                      .SetWidth(5)
+                      .Filterable(false)
+                      .Sanitized(false)
+                      .Encoded(false)
+                      .RenderValueAs(c => Html.ActionLink("Complete", "QualityInChargeStatusUpdate", "InChargeDashBoard", new { id = c.RefNo }, null));
+
+               }).WithPaging(5).Sortable(true)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

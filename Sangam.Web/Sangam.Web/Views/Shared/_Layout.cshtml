@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if lt IE 7]> <html lang="en" class="ie6">    <![endif]-->
+<!--[if IE 7]>    <html lang="en" class="ie7">    <![endif]-->
+<!--[if IE 8]>    <html lang="en" class="ie8">    <![endif]-->
+<!--[if IE 9]>    <html lang="en" class="ie9">    <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--[if IE 8]>
+    <link href="~/Content/css/ie8.css" rel="stylesheet" />
+    <![endif]-->
+    @*<link href="~/Content/css/MasterStyles.css" rel="stylesheet" />
+        <link href="~/Content/backgrounds.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/stylesheets.css" rel="stylesheet" type="text/css" />*@
+
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/Content/jquery-ui.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myCustom.css" rel="stylesheet" />
+
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    @* Scripts *@
+    @* Jquery *@
+    <script src="~/Scripts/Jquery11/jquery-1.11.3.js"></script>
+    <script src="~/Scripts/JqueryUI11/jquery-ui.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    @*Jquery-UI *@
+    <script type="text/javascript" src="~/scripts/js/plugins/jquery/jquery-ui.min.js"></script>
+
+    @* Jquery-Bootstrap *@
+    <script type="text/javascript" src="~/scripts/js/plugins/bootstrap/bootstrap.min.js"></script>
+    @*<script type="text/javascript" src="~/scripts/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>*@
+    @*<style>
+            input, select, textarea {
+                width: 100% !important;
+                border: 0px !important;
+            }
+        </style>*@
+    <style>
+        body {
+            font-size: 13px;
+            background: url(../../images/bg24.png) no-repeat bottom center fixed,url(../../images/body_bg.png) repeat-x #dff1fa;
+        }
+
+        .sorting, .sorting_asc, .sorting_desc {
+            background: none;
+        }
+
+        .dataTables_filter {
+            float: right;
+        }
+
+        .btn; {
+            display: inline-block;
+            padding: 1px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#UserName').focus();
+        });
+
+    </script>
+</head>
+<body class="bg-Images-num1">
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
+                    <nav class="navbar brb" role="navigation">
+                        <div class="main21" style="margin: 0px auto;">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="sr-only">Toggle navigation</span> <span class="icon-reorder"></span></button>
+                                <a class="navbar-brand" href="#">
+                                    <img src="~/Images/logo_main.png">
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    @* <div class="block block-drop-shadow">
+                              <section id="login" style="display: block; float: right;">
+                                @Html.Partial("_LoginPartial")
+                        </section>
+                        </div>*@
+                    <div>
+                        @RenderSection("featured", required: false)
+                        <section class="content-wrapper main-content clear-fix d">
+                            @RenderBody()
+                        </section>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/DataTable/Datatable.js"></script>
+<script src="~/Scripts/DataTable/DatatableBootstrap.js"></script>

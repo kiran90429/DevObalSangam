@@ -1,0 +1,127 @@
+﻿@model Sangam.Core.Model.TankerUnloadModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listItems = new List<SelectListItem> { new SelectListItem { Text = "AM", Value = "AM" }, new SelectListItem { Text = "MN", Value = "MN" }, new SelectListItem { Text = "PM", Value = "PM" } };
+    var LineItems = new List<SelectListItem> { new SelectListItem { Text = "Line1", Value = "1" }, new SelectListItem { Text = "Line2", Value = "2" }, new SelectListItem { Text = "Line3", Value = "3" } };
+    var SiloItems = new List<SelectListItem> { new SelectListItem { Text = "RAW-18", Value = "1" }, new SelectListItem { Text = "RAW-19", Value = "2" }, new SelectListItem { Text = "RAW-20", Value = "3" } };
+
+}
+
+@using (Html.BeginForm("Index", "TankerUnload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="panel panel">
+        <div class="panel-heading">
+            TANKER UNLOADING
+        </div>
+        <div class="panel-body">
+
+            <div class="col-sm-6">
+                &nbsp;
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        Date & Time:
+                    </div>
+                    @Html.TextBoxFor(model => model.DateTime, new { @class = "form-control", @Value = @DateTime.Now, required = "required" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                &nbsp;
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        Shift:
+                    </div>
+                    @Html.DropDownListFor(model => model.Shift, listItems, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                Recieved By:
+                @Html.TextBoxFor(model => model.RecievedBy, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                Weighment No:
+                @Html.TextBoxFor(model => model.WeighmentNo, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                Weighment Time:
+                @Html.TextBoxFor(model => model.WeighmentTime, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                Vehical No:
+                @Html.TextBox("VehicleNo", null, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col-sm-4">
+                Gross Weight:
+                @Html.TextBox("GrassWeight", null, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-8">
+                Sapplier Name:
+                @Html.TextBox("VendorName", null, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col-sm-4">
+                Line No:
+                @Html.DropDownListFor(model => model.LineNo, LineItems, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                Raw/Silo No:
+                @Html.DropDownListFor(model => model.SiloNo, SiloItems, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-4">
+                Quality Status:
+                @Html.TextBoxFor(model => model.QualityStatus, new { @class = "form-control", required = "required", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.QualityStatus)
+            </div>
+
+            <div class="col-sm-6">
+                &nbsp;
+                # QC Report:
+                @Html.TextBoxFor(model => model.QCReportNo, new { @class = "form-control", required = "required", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.QCReportNo)
+            </div>
+            <div class="col-sm-6">
+                Remarks:
+                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", required = "required" })
+            </div>
+            <div class="col-sm-12">
+                &nbsp;
+                <div class="form-group" style="text-align: left;">
+                    <a href="/dtirmrd/WeighmentIn/WeighmentIn" class="btn btn-success">Cancel</a>
+                    <input type="submit" value="Submit" class="btn btn-default" />
+                </div>
+            </div>
+
+            <div class="col-md-12" style="text-align: center;">
+                <-------------------- Tankers going to receive based on priority alert from Quality -------------------->
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).on('change', '#WeighmentNo', function () {
+        $.post('/dtirmrd/TankerQuality/GetTankerDetails', { rSTNo: $(this).val() }).success(function (data) {
+            debugger;
+            $('#VehicleNo').val(data.VehicleNo);
+            var date = parseInt(data.DateTime.substr(6));
+            var currentTime = new Date(parseInt(data.DateTime.substr(6)));
+            $('#WeighmentTime').val(currentTime);
+            $('#GrassWeight').val(data.GrossWeight);
+            $('#VendorName').val(data.VendorName);
+        });
+    });
+    $(document).on('change', '#WeighmentNo', function () {
+        $.post('/dtirmrd/TankerUnload/GetDashBoardQualityDetails', { rSTNo: $(this).val() }).success(function (data) {
+            debugger;
+            $('#QualityStatus').val(data.InchargeStatus);
+        });
+    });
+    $(document).on('change', '#WeighmentNo', function () {
+        $.post('/dtirmrd/TankerQuality/GetTankerQualityDetails', { rSTNo: $(this).val() }).success(function (data) {
+            debugger;
+            $('#QCReportNo').val(data.tRefNo);
+        });
+    });
+
+</script>
